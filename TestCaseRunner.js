@@ -1,3 +1,4 @@
+const chalk = require('chalk')
 class TestCase{
     constructor(tag,cb) {
         this.cb = cb
@@ -25,7 +26,7 @@ class TestCaseRunner  {
     }
     run() {
         setTimeout(()=>{
-            console.log("starting testcases")
+            console.log(chalk.yellow("starting testcases"))
             this.startTestLoop()
         },1000)
     }
@@ -34,19 +35,19 @@ class TestCaseRunner  {
             if(this.cases.length > 0) {
                 const testCase = this.cases[0]
                 if (testCase.test()) {
-                    console.log(`Testcase ${testCase.tag} has passed \u2713`)
+                    console.log(chalk.green(`Testcase ${testCase.tag} has passed \u2713`))
                     this.success++
                 }
                 else {
-                    console.log(`Testcase ${testCase.tag} has failed \u00D7`)
+                    console.log(chalk.red(`Testcase ${testCase.tag} has failed \u00D7`))
                     this.failed++
                 }
                 this.cases.splice(0,1)
             }
             else {
                 clearInterval(interval)
-                console.log(`test cases passed ${this.success}`)
-                console.log(`test cases failed ${this.failed}`)
+                console.log(chalk.green(`test cases passed ${this.success}`))
+                console.log(chalk.red(`test cases failed ${this.failed}`))
             }
         },1000)
     }
